@@ -1,22 +1,47 @@
 <h2>Sign Up</h2>
 <form>
-  <div class="row">
-    <div class="col-md-6">
-      <label>User Name</label>
-      <input type="text" class="form-control" [(ngModel)]="userName" name="userName" />
-      <label>Password</label>
-      <input type="password" class="form-control" [(ngModel)]="password" name="password" />
+  <div class='row'>
+    <div class='col-md-6'>
+      <div class='form-group'>
+        <label>Role</label><br>
+        <div class='form-check form-check-inline'>
+          <input type='radio' id='role1' [(ngModel)]='role' name='role' value='admin' />
+          <label class='form-check-label' for='role1'>Admin</label>
+        </div>
+        <div class='form-check form-check-inline'>
+          <input type='radio' [(ngModel)]='role' name='role' value='manager' />
+          <label class='form-check-label'>Manager</label>
+        </div>
+      </div>
+      <div class='form-group' *ngIf='role == "admin"'>
+        <label>Tavern Name</label>
+        <input type='text' class='form-control' [(ngModel)]='tavernName' name='tavernText'/>
+      </div>
+      <div class='form-group' *ngIf='role == "manager"'>
+        <label>Select a Tavern</label>
+        <select class='form-control' [(ngModel)]='selectedTavern' name='tavernSelect'>
+          <option *ngFor='let tavern of taverns' [ngValue]='tavern'>{{tavern.tavernName}}</option>
+        </select>
+      </div>
+      <div class='form-group'>
+        <label>User Name</label>
+        <input type='text' class='form-control' [(ngModel)]='userName' name='userName' required/>
+      </div>
+      <div class='form-group'>
+        <label>Password</label>
+        <input type='password' class='form-control' [(ngModel)]='password' name='password' required/>
+      </div>
     </div>
-    <div class="col-md-6"></div>
+    <div class='col-md-6'></div>
   </div>
   <br />
-  <div class="row">
-    <div class="col-md-6">
-      <button type="submit" class="btn btn-primary" (click)="signup()">
+  <div class='row'>
+    <div class='col-md-6'>
+      <button type='submit' class='btn btn-primary' (click)='signup()'>
         Submit
       </button>
-      <span class="col-md-2"></span>
-      <button type="button" class="btn btn-primary" (click)="cancel()">
+      <span class='col-md-2'></span>
+      <button type='button' class='btn btn-primary' (click)='cancel()'>
         Cancel
       </button>
     </div>

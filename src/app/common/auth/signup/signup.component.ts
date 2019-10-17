@@ -1,21 +1,64 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { TavernService } from '../../tavern.service';
 
 @Component({
-    templateUrl: './signup.component.html',
+  templateUrl: './signup.component.html',
 })
 export class SignupComponent {
-    userName = '';
-    password = '';
+  userName = '';
+  password = '';
+  tavernName = '';
+  role = 'admin';
+  taverns = [];
+  selectedTavern = null;
 
-    constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private tavernService: TavernService
+  ) {
+    this.tavernService.getTaverns().subscribe(
+      (response) => {
+        console.log(response);
+        this.taverns = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
 
-    signup(): void {
-      console.log('Username: ' + this.userName + ', Password: ' + this.password);
+  signup(): void {
+    let user: {};
+
+    if (this.role === 'admin') {
+      user = {
+        UserName: this.userName,
+        Password: this.password,
+        Tavern: {
+          ID: 0,
+          tavernName: this.tavernName
+        }
+      }
+    }
+    else if (this.role = 'manager') {
+      user = {
+        UserName: this.userName,
+        Password: this.password,
+        Tavern: this.selectedTavern
+      }
     }
 
-    cancel(): void {
-        this.router.navigateByUrl('/login');
-    }
+    console.log(user);
+
+    this.authService.create(user).subscribe((answer) => {
+      this.router.navigateByUrl('/login');
+    });
+  }
+
+  cancel(): void {
+    this.router.navigateByUrl('/login');
+  }
 }
