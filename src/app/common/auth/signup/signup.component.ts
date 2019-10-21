@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { TavernService } from '../../tavern.service';
+import { TavernService } from '../../../taverns/tavern.service';
 
 @Component({
   templateUrl: './signup.component.html',
@@ -19,7 +19,7 @@ export class SignupComponent {
     private authService: AuthService,
     private tavernService: TavernService
   ) {
-    this.tavernService.getTaverns().subscribe(
+    this.tavernService.getAllTaverns().subscribe(
       (response) => {
         console.log(response);
         this.taverns = response;

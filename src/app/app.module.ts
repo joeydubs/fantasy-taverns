@@ -13,6 +13,7 @@ import { LoginComponent } from './common/auth/login/login.component';
 import { TokenInterceptor } from './common/auth/token.interceptor';
 import { HomeComponent } from './home.component';
 import { SignupComponent } from './common/auth/signup/signup.component';
+import { TavernsModule } from './taverns/taverns.module';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -23,6 +24,7 @@ import { SignupComponent } from './common/auth/signup/signup.component';
         FormsModule,
         HttpClientModule,
         NgbModule,
+        TavernsModule,
         AppRoutingModule,
         CookieModule.forRoot(),
     ],

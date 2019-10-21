@@ -3,6 +3,7 @@ const express = require('express');
 require('dotenv').config();
 require('./global_functions');
 const userController = require('./controllers/UsersController');
+const tavernsController = require('./controllers/TavernsController');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -68,24 +69,7 @@ app.use((req, res, next) => {
 
 app.post('/users', userController.create);
 app.post('/login', userController.login);
-
-app.post('/tavernList', (async function(req, res) {
-    let taverns;
-
-    const pool = await poolPromise;
-
-    try {
-        taverns = await pool
-            .request()
-            .query('SELECT tavernName, ID FROM Taverns');
-        taverns = taverns.recordset;
-    }
-    catch (error) {
-        returnError(res, error, 500);
-    }
-
-    returnSuccessResponse(res, taverns);
-}));
+app.get('/tavernList', tavernsController.getTaverns);
 
 console.log('SERVER READY');
 module.exports = app;
