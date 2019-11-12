@@ -1,0 +1,35 @@
+<h4>Book a Room</h4>
+<form [formGroup]='bookStayForm'>
+    <div class='row'>
+        <div class='col-md-6'>
+          <div class='form-group'>
+            <label>Select a Guest</label>
+            <select class='form-control' formControlName='guestID'>
+              <option *ngFor='let guest of tavernGuests' value='guest.ID'>{{ guest.GuestName }}</option>
+            </select>
+          </div>
+          <div class='form-group'>
+            <label>Select a Date</label>
+            <input type='date' class='form-control' formControlName='startDate'/>
+          </div>
+          <div class='form-group'>
+            <label>Select a Room</label>
+            <select class='form-control' formControlName='roomID'>
+                <option *ngFor='let room of tavernRooms' value='room.ID'>{{ room.RoomName }} - {{ room.DailyRate | currency }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class='row'>
+        <div class='col-md-6'>
+          <button type='submit' class='btn btn-primary' (click)='signup()'>
+            Submit
+          </button>
+          <span class='col-md-2'></span>
+          <button type='button' class='btn btn-primary' (click)='cancel()'>
+            Reset
+          </button>
+        </div>
+      </div>    
+</form>

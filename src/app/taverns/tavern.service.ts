@@ -15,6 +15,11 @@ export interface IRoom {
   DailyRate: string,
 }
 
+export interface IGuest {
+  ID: string,
+  GuestName: string,
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,10 +32,18 @@ export class TavernService {
   }
 
   getMyTaverns(): Observable<ITavern> {
-    return this.http.get<ITavern>('http://localhost:3000/my-taverns')
+    return this.http.get<ITavern>('http://localhost:3000/my-taverns');
   }
 
   getTavernRooms(): Observable<IRoom[]> {
-    return this.http.get<IRoom[]>('http://localhost:3000/tavern-rooms')
+    return this.http.get<IRoom[]>('http://localhost:3000/tavern-rooms');
+  }
+
+  getTavernRoom(id: number): Observable<IRoom> {
+    return this.http.get<IRoom>('http://localhost:3000/tavern-room');
+  }
+
+  getTavernGuests(): Observable<IGuest[]> {
+    return this.http.get<IGuest[]>('http://localhost:3000/tavern-guests');
   }
 }

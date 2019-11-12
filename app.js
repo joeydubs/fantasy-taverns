@@ -80,6 +80,17 @@ app.get(
     passport.authenticate('jwt', { session: false }),
     tavernsController.getTavernRooms
 )
+app.get(
+    '/tavern-room',
+    passport.authenticate('jwt', { session: false }),
+    tavernsController.getTavernRoom
+)
+app.get(
+    '/tavern-guests',
+    passport.authenticate('jwt', { session: false }),
+    tavernsController.getTavernGuests
+)
+
 
 console.log('SERVER READY');
 module.exports = app;

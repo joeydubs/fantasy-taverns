@@ -64,5 +64,48 @@ const getTavernRooms = async function (req, res) {
 
     returnSuccessResponse(res, tavernRooms);
 }
-
 module.exports.getTavernRooms = getTavernRooms;
+
+const getTavernRoom = async function (req, res) {
+    res.setHeader('ContentType', 'application/json');
+    let tavernRoom;
+
+    console.log(req.body)
+    
+    const pool = await poolPromise;
+
+    try {
+        tavernRoom = await pool
+            .request()
+            .input('tavernID', sql.VarChar, req.user.TavernID)
+            .input('roomID', sql.Int, req.body.id)
+            .query('SELECT * FROM Rooms WHERE TavernID = @tavernID');
+        tavernRoom = tavernRoom.recordset;
+    }
+    catch (error) {
+        returnError(res, error, 500);
+    }
+
+    returnSuccessResponse(res, tavernRoom);
+}
+module.exports.getTavernRoom = getTavernRoom;
+
+const getTavernGuests = async function (req, res) {
+    res.setHeader('ContentType', 'application/json')
+    let tavernGuests;
+
+    const pool = await poolPromise;
+
+    try {
+        tavernGuests = await pool
+            .request()
+            .query('SELECT ID, GuestName FROM Guests');
+        tavernGuests = tavernGuests.recordset;
+    }
+    catch (error) {
+        returnError(res, error, 500);
+    }
+
+    returnSuccessResponse(res, tavernGuests);
+}
+module.exports.getTavernGuests = getTavernGuests;
